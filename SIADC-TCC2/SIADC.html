@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary: #ff5722;
+            --secondary: #2196f3;
+            --text-dark: #333;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: first baseline;
+            align-items: center;
+            height: 98vh;
+            width: 98vw;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 5px;
+            color: var(--text-dark);
+        }
+
+        button{
+            height: 50px;
+            width: 50px;
+        }
+
+        .caixa_topo{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            height: 16vh;
+            width: 90vw;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid #303030;
+            border-bottom: 1px solid #303030;
+            border-top: 1px solid #303030;
+            border-right: 5px solid #303030;
+        }
+
+        .caixa_meio{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            width: 90vw;
+            margin-bottom: 25px;
+        }
+
+        .caixa_fundo{
+            height:80px;
+        }
+
+        .envol_topo{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 80%;
+            width: 90%;
+        }
+
+        .infos{
+            height: 40%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: end;
+        }
+
+        .texto{
+            display: flex;
+            height: 75%;
+            width: 30%;
+            background: var(--card-bg);
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: clamp(0.7rem,1vw,1rem);
+            border: 1px solid #303030;
+            border-radius: 5px;
+        }
+
+        .titulo{
+            display: flex;
+            height: 60%;
+            width: 100%;
+            background: var(--card-bg);
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border: 1px solid #303030;
+            border-radius: 5px;
+            color: #1a237e;
+            font-size: clamp(1.0rem,2vw,1.5rem);
+        }
+
+        .caixa_progresso {
+            position: relative;
+            width: 400px; /* Aumentei a largura para destacar o formato oval */
+            height: 300px;
+        }
+
+        .espacoh{
+            height:20px;
+        }
+
+        .espacov{
+            width:20px;
+        }
+
+        .somar{
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #303030;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+        }
+
+        .situacao {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+            color: #000000;
+            font-size: 1.1rem;
+            font-weight: 350;
+        }
+
+        .abas_lat{
+            height: 55vh;
+            width: 20vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #303030;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+        }
+
+        .caixa_cartas{
+            height: 50vh;
+            width: 20vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .carta_sensor{
+            display: flex;
+            flex-direction: column;
+            height:22%;
+            width:90%;
+            justify-content: center;
+            align-items: center;
+            font-weight: 400;
+            font-size: 30px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            border: 1px solid #303030;
+        }
+
+        .nome_carta{
+            display: flex;
+            height:20%;
+            width:100%;
+            justify-content: center;
+            align-items: center;
+            font-weight: 400;
+            font-size: 10px;
+        }
+
+        .valor_carta{
+            display: flex;
+            height:60%;
+            width:100%;
+            justify-content: center;
+            align-items: center;
+            font-weight: 400;
+            font-size: 30px;
+        }
+
+        #tempCarta{
+            background-color: #ffe8c9;
+        }
+
+        #umidCarta{
+            background-color: #cafffe;
+        }
+
+        #dutyCarta{
+            background-color: #ffcaca;
+        }
+
+        #pwmCarta{
+            background-color: #d1caff;
+        }
+
+        button{
+            height:20%;
+            width:85%;
+            border: none;
+            color: #202020;
+            border-radius: 8px;
+            font-weight: 200;
+            font-size: 20px;
+            cursor: pointer;
+            /*Os 4 comando seguinte eu adicionei como forma de bloquiar o copyMode, ao usar o no celular, precionar em cima de um texto ativa o comando de seleção de texto, interrompendo o pressionar do botão*/
+            -webkit-user-select: none; 
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:hover{
+            color: #000000;
+            font-size: 23px;
+            width: 90%;
+            transition: 0.1s;
+        }
+
+        #atualizar:active{
+            background-color: #06014a;
+            color: #ffffff;
+            transform: scale(0.98);
+        }
+
+        #atualizar{
+            background-color: #82c7ff;
+        }
+
+        #iniciar:active{
+            background-color: #073200;
+            color: #ffffff;
+            transform: scale(0.98);
+        }
+
+        #iniciar{
+            background-color: #82ff82;
+        }
+
+        #parar:active{
+            transform: scale(0.96);
+            color: #ffffff;
+        }
+
+        #parar{
+            background-color: #ff8282;
+            position: relative;
+            overflow: hidden; /* Importante para o efeito não vazar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .massa{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #4a0101;/* Cor que vai preencher */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: none; /* Reset padrão */
+            z-index: -1; /* Fica atrás do texto */
+            pointer-events: none;
+        }
+
+        #parar:active .massa {
+            width: 100%; /* Cobre todo o botão */
+            height: 105%;
+            border-radius: 0;
+            transition: width 5s linear;
+        }
+
+        .textoBtn {
+            pointer-events: none;
+        }
+
+        #config:active{
+            background-color: #371400;
+            color: #ffffff;
+            transform: scale(0.98);
+        }
+
+        #config{
+            background-color: #fff582;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        ellipse {
+            fill: none;
+            stroke-width: 15;
+            stroke-linecap: round;
+        }
+
+        .fundo_oval {
+            stroke: #8d8c8c;
+        }
+
+        .progresso_oval {
+            stroke: #2ecc71;
+            transition: stroke-dashoffset 0.8s ease-out;
+        }
+
+        .porcen_interno {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0f2843;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <div class="caixa_topo">
+        <div class="envol_topo">
+            <div class="titulo">
+                SISTEMA DE MONITORAMENTO
+            </div>
+            <div class="infos">
+                <div class="texto" id="data">--</div>
+                <div class="texto" id ="clock">--</div>
+                <div class="texto" id="hora">--</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="caixa_meio">
+        <div class="abas_lat">
+            <div class="caixa_cartas">
+                <div class="carta_sensor" id="tempCarta">
+                    <div class="nome_carta">Temperatura</div>
+                    <div class="valor_carta" id="temp">--</div>
+                </div>
+                <div class="carta_sensor" id="umidCarta">
+                    <div class="nome_carta">Umidade</div>
+                    <div class="valor_carta" id="umid">--</div>
+                </div>
+                <div class="carta_sensor" id="dutyCarta">
+                    <div class="nome_carta">Duty Cyclo</div>
+                    <div class="valor_carta" id="duty">--</div>
+                </div>
+                <div class="carta_sensor" id="pwmCarta">
+                    <div class="nome_carta">PWM do Ventilador</div>
+                    <div class="valor_carta" id="pwm">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="espacov"></div>
+
+        <div class="somar">
+            <div class="espacoh"></div>
+            <div class="situacao">
+                --
+            </div>
+
+            <div class="caixa_progresso">
+                <svg viewBox="0 0 300 200">
+                    <ellipse class="fundo_oval" cx="150" cy="100" rx="130" ry="80"></ellipse> //cinza
+                    <ellipse class="progresso_oval" id="progresso" cx="150" cy="100" rx="130" ry="80"></ellipse> //Verde
+                </svg>
+                <div class="porcen_interno" id="porcent">--</div>
+            </div>
+        </div>
+
+         <div class="espacov"></div>
+
+        <div class="abas_lat">
+            <div class="caixa_cartas">
+                <button id="atualizar">Atualizar</button>
+                <button id="iniciar">Iniciar</button>
+                    <button id="parar">
+                        <span class="massa"></span>
+                        <span class="textoBtn">Parar</span>
+                    </button>
+                <button id="config">Configurações</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="caixa_fundo">
+        
+    </div>
+
+<script>
+var cont=0;
+var progresso=0;
+    function setProgress(percent) {
+    var porcen_S = percent.toFixed(2).toString().replace('.',',');
+    const el = document.getElementById('progresso');
+    const text = document.getElementById('porcent');
+    
+    const rx = el.rx.baseVal.value;
+    const ry = el.ry.baseVal.value;
+
+    // Cálculo do perímetro (Ramanujan)
+    const h = Math.pow((rx - ry), 2) / Math.pow((rx + ry), 2);
+    const perimeter = Math.PI * (rx + ry) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
+
+    // 1. Primeiro, definimos o dasharray com o valor exato do perímetro
+    el.style.strokeDasharray = perimeter;
+    
+    // 2. Começamos com o offset igual ao perímetro (barra totalmente escondida)
+    // Usamos um pequeno timeout ou garantimos que o valor inicial seja aplicado
+    el.style.strokeDashoffset = perimeter;
+
+    // 3. Após um curtíssimo tempo, aplicamos o valor da porcentagem
+    // Isso engatilha a transição suave do CSS
+    setTimeout(() => {
+        const offset = perimeter - (percent / 100 * perimeter);
+        el.style.strokeDashoffset = offset;
+        text.innerText = `${porcen_S}%`;
+    }, 50);
+}
+
+
+
+//Buscar dados do SHEETS
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbx2QUAU1Vhba2H1UsWmBi8yztqAacB_1A06ah4NGR_4hrvAPcGeYLjHqucZr8HLT2x-/exec";
+var comando;
+var url;
+var finalizado=false;
+var umaVez=false;
+    async function buscarDados() {
+        
+        try {
+            const response = await fetch(URL_SCRIPT);
+            const dados = await response.json();
+
+            document.getElementById('data').innerText = dados.data_;
+            document.getElementById('hora').innerText = dados.hora_;
+            document.getElementById('temp').innerText = dados.temp_ + " °C";
+            document.getElementById('umid').innerText = dados.umid_ + " %";
+            document.getElementById('duty').innerText = dados.duty_;
+            document.getElementById('pwm').innerText = dados.pwm_;
+            stsMaq.innerText = dados.status_;
+            progresso=parseFloat(dados.progres_.replace(',', '.'))*100.0;
+                setProgress(progresso);
+                cont=0;
+
+        if (dados.status_=="Incubação em Progresso"){
+            document.querySelector('.somar').style.backgroundColor="#ffffff";
+            document.querySelector('.situacao').style.backgroundColor="#ffffff";
+        } else{
+            if (dados.status_=="Procedimento Interrompido"){
+                document.querySelector('.somar').style.backgroundColor="#cccccc";
+                document.querySelector('.situacao').style.backgroundColor="#cccccc";
+                //document.getElementById('porcent').innerText="X";
+            } else {
+                if (dados.status_=="Incubação Concluída :)"){
+                document.querySelector('.somar').style.backgroundColor="#adffc5";
+                document.querySelector('.situacao').style.backgroundColor="#adffc5";
+                //document.getElementById('porcent').innerText="X";
+            }
+            }
+        }
+
+        if (progresso>=100 && umaVez){
+            url=URL_SCRIPT+"?coman=Finalizado";
+            fetch(url, {
+                method: 'GET', // O Apps Script deve ter a função doPost(e)
+                mode: 'no-cors', // Essencial para evitar erros de política de segurança (CORS)
+                cache: 'no-cache',
+            })
+            .then(() => {
+                // Com 'no-cors', o JS não consegue ler a resposta, 
+                // mas o comando chega ao servidor e o código 302 é tratado internamente.
+                stsMaq.innerText = "Incubação Concluída :)";
+                document.querySelector('.somar').style.backgroundColor="#adffc5";
+                document.querySelector('.situacao').style.backgroundColor="#adffc5";
+                //document.getElementById('porcent').innerText="X";
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                stsMaq.innerText = "STATUS: Erro ao enviar para o Sheets";
+            });
+        progresso=0;    
+        umaVez=false;
+        }
+        if (progresso!=100){
+            umaVez=true;
+        }
+        } catch (erro) {
+            console.error("Erro ao buscar dados:", erro);
+        }
+    }
+
+    // Busca dados ao abrir a página e a cada 25 segundos
+    buscarDados();
+    setInterval(buscarDados, 25000);
+// Inicia a animação
+    window.onload = () => {
+        setProgress(progresso); 
+    };
+//Animação do botão PARAR
+const btnParar = document.getElementById('parar');
+const btnIniciar = document.getElementById('iniciar');
+const btnAtualizar = document.getElementById('atualizar');
+const stsMaq = document.querySelector('.situacao');
+let timerParar;
+
+// Função para iniciar o contador
+const iniciarContagem = () => {
+    timerParar = setTimeout(() => {
+        
+        // Coloque aqui a lógica real para parar sua máquina
+        stsMaq.innerText="Enviando comando Terminal...";
+            url=URL_SCRIPT+"?coman=Desativado";
+                // Para Web Apps do Google, usamos o modo 'no-cors' ou tratamos o redirecionamento
+    fetch(url, {
+        method: 'GET', // O Apps Script deve ter a função doPost(e)
+        mode: 'no-cors', // Essencial para evitar erros de política de segurança (CORS)
+        cache: 'no-cache',
+    })
+    .then(() => {
+        // Com 'no-cors', o JS não consegue ler a resposta, 
+        // mas o comando chega ao servidor e o código 302 é tratado internamente.
+        stsMaq.innerText = "Procedimento Interrompido";
+        document.querySelector('.somar').style.backgroundColor="#cccccc";
+            document.querySelector('.situacao').style.backgroundColor="#cccccc";
+                //document.getElementById('porcent').innerText="X";
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        stsMaq.innerText = "STATUS: Erro ao enviar para o Sheets";
+    });
+    }, 5000); // 5000ms = 5 segundos
+};
+
+btnIniciar.addEventListener('click', () => {
+    // 1. Feedback visual imediato
+    stsMaq.innerText = "Enviando comando Inicializador...";
+    url=URL_SCRIPT+"?coman=Ativo"
+    // 2. Requisição Fetch
+    fetch(url, {
+        method: 'GET',
+        mode: 'no-cors', // Mantido para funcionar com Google Apps Script
+        cache: 'no-cache',
+    })
+    .then(() => {
+        // Como o clique é normal, o feedback é instantâneo
+        stsMaq.innerText = "Incubação em Progresso";
+        document.querySelector('.somar').style.backgroundColor="#ffffff";
+        document.querySelector('.situacao').style.backgroundColor="#ffffff";
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        stsMaq.innerText = "STATUS: Falha na conexão";
+    });
+});
+
+btnAtualizar.addEventListener('click', () => {
+    location.reload() //Comando para atualizar a página, tipo o f5
+});
+// Função para cancelar se soltar ou tirar o dedo/mouse
+const cancelarContagem = () => {
+    clearTimeout(timerParar);
+};
+
+// Eventos para Mouse (Desktop)
+btnParar.addEventListener('mousedown', iniciarContagem);
+btnParar.addEventListener('mouseup', cancelarContagem);
+btnParar.addEventListener('mouseleave', cancelarContagem);
+
+// Eventos para Touch (Celular) - O preventDefault evita o menu de contexto
+btnParar.addEventListener('touchstart', (e) => {
+    // e.preventDefault(); // Ative se quiser bloquear o scroll ao tocar no botão
+    iniciarContagem();
+});
+btnParar.addEventListener('touchend', cancelarContagem);
+btnParar.addEventListener('touchcancel', cancelarContagem);
+
+    async function contadorClock() {
+        document.getElementById('clock').innerText = `Atualizado a ${cont} segundos`;
+        cont=cont+1;
+    }
+
+    setInterval(contadorClock,1000)
+
+
+</script>
+
+</body>
+</html>
