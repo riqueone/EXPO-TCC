@@ -51,6 +51,10 @@ h2{
     text-indent: 20px;
 }
 
+h3{
+    text-align: center;
+}
+
 p{
     font-family: var(--fonteEscr);
     font-weight: 300;
@@ -62,20 +66,51 @@ p{
 }
 
 div.orgIma{
+    padding: 10px 0px 0px 0px;
     width: 100%;
     display: flex;
     flex-direction:row;
     flex-wrap: wrap;
+    row-gap: 10px;
     justify-content: space-evenly;
     align-items: center;
 }
 
+div.titLegIma{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+p.tit, p.leg{
+    font-size: 0.8em;
+    padding: 0px 0px 0px 0px;
+    text-indent: 0px;
+    line-height: 1em;
+}
+
 img{
-    margin:15px 0px 15px 0px;
+    margin:5px 0px 5px 0px;
     width: 90%;
     max-width: 400px;
     border:1px solid black;
     border-radius: 20px;
+}
+
+img.expliq{
+    max-width: 850px;
+}
+
+div.obser{
+    max-width: 350px;
+    background-color: rgba(45, 45, 45, 0.35);
+    border-radius: 20px;
+    box-shadow: 0px 0px 2px 2px rgba(45, 45, 45, 0.35);
+}
+
+div.obser > p{
+    text-indent: 15px;
 }
 
 footer{
