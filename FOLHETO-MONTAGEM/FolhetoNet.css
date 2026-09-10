@@ -98,6 +98,10 @@ p.leg{
     padding: 0px 0px 15px 0px;
 }
 
+p.tit{
+    padding: 15px 0px 0px 0px;
+}
+
 picture{
     display: flex;
     justify-content: center;
