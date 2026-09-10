@@ -4,12 +4,12 @@
 :root{
     --fonteDiferen:"Doppio One", sans-serif;
     --fonteEscr: "Roboto", sans-serif;
+    --borda-cir:20px;
 }
 
 *{
     margin: 0px;
     padding:0px;
-    border:1px dashed purple;
 }
 
 html, body, main, section{
@@ -26,6 +26,10 @@ body{
 }
 
 main{
+    margin: 15px 0px 15px 0px;
+    border-top-left-radius: var(--borda-cir);;
+    border-top-right-radius: var(--borda-cir);;
+    background-color: white;
 }
 
 section{
@@ -90,12 +94,22 @@ p.tit, p.leg{
     line-height: 1em;
 }
 
+p.leg{
+    padding: 0px 0px 15px 0px;
+}
+
+picture{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 img{
     margin:5px 0px 5px 0px;
     width: 90%;
     max-width: 400px;
     border:1px solid black;
-    border-radius: 20px;
+    border-radius: var(--borda-cir);;
 }
 
 img.expliq{
@@ -103,9 +117,10 @@ img.expliq{
 }
 
 div.obser{
+    margin: 15px 0px 15px 0px;
     max-width: 350px;
     background-color: rgba(45, 45, 45, 0.35);
-    border-radius: 20px;
+    border-radius: var(--borda-cir);;
     box-shadow: 0px 0px 2px 2px rgba(45, 45, 45, 0.35);
 }
 
