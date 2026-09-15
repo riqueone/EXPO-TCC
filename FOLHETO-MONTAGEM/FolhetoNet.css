@@ -5,15 +5,14 @@
     --fonteDiferen:"Doppio One", sans-serif;
     --fonteEscr: "Roboto", sans-serif;
     --borda-cir:20px;
-    --corFerra:#090027;
-    --corMate: #391900;
-    --corPeca: #243500;
+    --corFerra:#130A57;
+    --corMate: #5f2602;
+    --corPeca: #425704;
 }
 
 *{
     margin: 0px;
     padding:0px;
-    border: 1px dashed purple;
 }
 
 html, body, main, section{
@@ -167,13 +166,18 @@ picture{
 img{
     margin:5px 0px 5px 0px;
     width: 90%;
-    max-width: 400px;
     border:1px solid black;
     border-radius: var(--borda-cir);;
 }
 
-img.expliq{
-    max-width: 850px;
+img.cotas{
+    max-width: 850px;/*Procurar ententer melhor o funcionamento aqui*/
+    max-height: 500px;/*Procurar ententer melhor o funcionamento aqui*/
+}
+
+img.ilust{
+    max-width: 400px;/*Procurar ententer melhor o funcionamento aqui*/
+    max-height: 400px;/*Procurar ententer melhor o funcionamento aqui*/
 }
 
 div.obser{
