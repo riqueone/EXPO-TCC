@@ -5,11 +5,15 @@
     --fonteDiferen:"Doppio One", sans-serif;
     --fonteEscr: "Roboto", sans-serif;
     --borda-cir:20px;
+    --corFerra:#090027;
+    --corMate: #391900;
+    --corPeca: #243500;
 }
 
 *{
     margin: 0px;
     padding:0px;
+    border: 1px dashed purple;
 }
 
 html, body, main, section{
@@ -87,6 +91,21 @@ input{
 input:checked + p.listagem{
     text-decoration: line-through;
     color: rgb(97, 97, 97);
+}
+
+span.peca{
+    color:var(--corPeca);
+    font-weight: 600;
+}
+
+span.ferra{
+    color: var(--corFerra);
+    font-weight: 600;
+}
+
+span.mate{
+    color: var(--corMate);
+    font-weight: 600;
 }
 
 p{
